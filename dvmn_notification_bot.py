@@ -1,4 +1,5 @@
 import argparse
+import textwrap
 from time import sleep
 import requests
 from environs import Env
@@ -22,6 +23,7 @@ def main():
         'Authorization': f'Token {devman_access_token}',
     }
     params = {}
+
     while True:
         try:
             dvmn_response = requests.get("https://dvmn.org/api/long_polling/", headers=headers, timeout=90,
@@ -37,8 +39,10 @@ def main():
             params['timestamp'] = dvmn_check_list['last_attempt_timestamp']
             bot.send_message(
                 chat_id=chat_id,
-                text=f'Преподаватель проверил работу "{dvmn_check_list["new_attempts"][0]["lesson_title"]}".\n'
-                     f'{dvmn_check_list["new_attempts"][0]["lesson_url"]}'
+                text=textwrap.dedent(
+                    f'''Преподаватель проверил работу "{dvmn_check_list["new_attempts"][0]["lesson_title"]}".
+{dvmn_check_list["new_attempts"][0]["lesson_url"]}'''
+                )
             )
             if dvmn_check_list['new_attempts'][0]['is_negative']:
                 bot.send_message(chat_id=chat_id, text="К сожалению, в работе нашлись ошибки :(")
