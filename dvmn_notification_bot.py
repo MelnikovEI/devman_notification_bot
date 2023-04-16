@@ -4,9 +4,11 @@ from time import sleep
 import requests
 from environs import Env
 import telegram
+import logging
 
 
 def main():
+    logging.basicConfig(level=logging.DEBUG)
     env = Env()
     env.read_env()
     devman_access_token = env('DEVMAN_ACCESS_TOKEN')
@@ -23,6 +25,7 @@ def main():
         'Authorization': f'Token {devman_access_token}',
     }
     params = {}
+    logging.info('Bot started')
 
     while True:
         try:
