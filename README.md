@@ -13,14 +13,13 @@ pip install -r requirements.txt
 Создайте файл с переменными окружения в папке проекта: "your_project_folder\\.env":
 - DEVMAN_ACCESS_TOKEN= <- токен Вашего доступа к [API Devman](https://dvmn.org/api/docs/)  
 - TG_BOT_TOKEN= <- токен бота можно узнать в https://t.me/BotFather
+- TG_USER_ID= <- id учетной записи телеграм пользователя, которого нужно уведомлять, узнать: https://telegram.me/userinfobot
 
 ## Как использовать
 Запустить бот:
 ```sh
-python dvmn_notification_bot.py 123456789
+python dvmn_notification_bot.py
 ```
-где "123456789" - id Вашей учетной записи в телеграм можно узнать https://telegram.me/userinfobot
-
 Как только работа будет проверена, бот пришлёт Вам оповещение, например:
 
 `Преподаватель проверил работу "Отправляем уведомления о проверке работ".

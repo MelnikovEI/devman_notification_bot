@@ -33,16 +33,12 @@ def main():
     env.read_env()
     devman_access_token = env('DEVMAN_ACCESS_TOKEN')
     tg_bot_token = env('TG_BOT_TOKEN')
+    tg_user_id = env('TG_USER_ID')
 
     bot = telegram.Bot(token=tg_bot_token)
 
-    parser = argparse.ArgumentParser(description='Telegram bot sends notifications about tasks control results')
-    parser.add_argument("chat_id", help='You can get your id from https://t.me/userinfobot')
-    args = parser.parse_args()
-    chat_id = args.chat_id
-
     logger.setLevel(logging.WARNING)
-    logger.addHandler(TelegramLogsHandler(bot, chat_id))
+    logger.addHandler(TelegramLogsHandler(bot, tg_user_id))
     logger.info("Бот запущен")
 
     headers = {'Authorization': f'Token {devman_access_token}'}
@@ -72,7 +68,7 @@ def main():
                     tg_message += "\nК сожалению, в работе нашлись ошибки :("
                 else:
                     tg_message += "\nПреподавателю всё понравилось, можно приступать к следующему уроку!"
-                send_tg_notification(bot, chat_id, tg_message)
+                send_tg_notification(bot, tg_user_id, tg_message)
             if dvmn_check_list['status'] == 'timeout':
                 params['timestamp'] = dvmn_check_list['timestamp_to_request']
         except Exception as err:
